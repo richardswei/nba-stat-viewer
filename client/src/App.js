@@ -8,7 +8,7 @@ function App() {
 
   async function callApi() {
     try {
-      const res = await fetch(`http://localhost:9000/testApi`);
+      const res = await fetch(`http://localhost:9000/`);
       const json = await res.json();
       console.log('json', json)
       return json;
@@ -20,7 +20,11 @@ function App() {
 
   useEffect(() => {
     callApi().then((res) => {
-      setResponse(`Response is ${res["success"]}`)
+      try {
+        setResponse(`Response is ${res["success"]}`)
+      } catch (error) {
+        console.error('err', error);
+      }
     })
   }, [])
 
