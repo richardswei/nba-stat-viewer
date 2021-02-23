@@ -1,5 +1,4 @@
 var express = require("express");
-var internalApi = require("./internalApi");
 var router = express.Router();
 var player_controller = require('../controllers/playerController');
 
