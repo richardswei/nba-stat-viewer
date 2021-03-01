@@ -22,6 +22,12 @@ router.get("/:playerId", async (req, res) => {
   await player_controller.get_player_detail(req, res)
 });
 
+// return the results from a search by name
+router.get("/stats/:season?", async (req, res) => {
+  await player_controller.get_season_averages(req, res)
+});
+
+
 // router.get("/gameStats/:playerId/:startDate-:endDate", function(req, res, next) {
 // });
 

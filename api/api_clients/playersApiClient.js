@@ -1,8 +1,9 @@
 const fetch = require('node-fetch')
+const requestPrefix = 'https://balldontlie.io/api/v1/'
 
 exports.getPlayerSearch = async (req, res) => {
   try {
-    const url = `https://balldontlie.io/api/v1/players?search=${req.params.name}&per_page=${req.params.limit}`
+    const url = `${requestPrefix}players?search=${req.params.name}&per_page=${req.params.limit}`
     console.log(url)
     let results = await fetch(url)
     return results.json()
@@ -13,7 +14,7 @@ exports.getPlayerSearch = async (req, res) => {
 
 exports.getPlayerSearchAll = async (req, res) => {
   try {
-    const url = `https://balldontlie.io/api/v1/players?search=${req.params.name}&per_page=${req.params.limit}`
+    const url = `${requestPrefix}players?search=${req.params.name}&per_page=${req.params.limit}`
     console.log(url)
     let results = await fetch(url)
     return results.json()
@@ -24,9 +25,40 @@ exports.getPlayerSearchAll = async (req, res) => {
 
 exports.getPlayerDetail = async (req, res) => {
   try {
-    let results = await fetch(`https://www.balldontlie.io/api/v1/players/${req.params.playerId}`)
+    let results = await fetch(`${requestPrefix}players/${req.params.playerId}`)
     return results.json()
   } catch (error) {
     console.error(error)
   }
 }
+
+exports.getSeasonAveragesMultiPlayer = async (req, res) => {
+  try {
+    const players = req.query.players.reduce((acc, id) => {
+      return acc + '&player_ids[]=' + id
+    }, '')
+    const url = `${requestPrefix}season_averages?season=${req.params.season}${players}`
+    console.log(url)
+    let results = await fetch(url)
+    return results.json()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+
+// exports.getSeasonAveragesMultiPlayer = async (req, res) => {
+//   try {
+//     console.log("tried")
+//     const players = req.query.players.reduce((acc, id) => {
+//       return acc + '&player_ids[]=' + id
+//     }, '')
+//     const url = `${requestPrefix}season_averages?season=${req.query.season}${players}`
+//     console.log(url)
+//     let results = await fetch(url)
+//     return results.json()
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
+

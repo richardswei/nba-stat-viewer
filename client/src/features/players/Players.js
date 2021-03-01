@@ -1,5 +1,5 @@
 import PlayerSearch from 'components/PlayerSearch'
-
+import SeasonAverages from 'features/players/SeasonAverages'
 import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux';
 import {useDispatch} from 'react-redux'
@@ -14,13 +14,18 @@ function Players() {
   return (<div>
     <PlayerSearch/>
     <div>
-      {players &&
-        players.map((player) => 
-          <button key={player.id} onClick={() => dispatch(removePlayers([player]))}>
-            {player.first_name} {player.last_name}
-          </button>
-        )
-      }
+      {players && <div>   
+        {players.map((player) => 
+          <div>
+            <button key={player.id} onClick={() => dispatch(removePlayers([player]))}>
+              {player.first_name} {player.last_name}
+            </button>
+          </div>
+        )}
+        <div>
+          <SeasonAverages players={players}/>
+        </div>
+      </div>}
     </div>
   </div>
   );

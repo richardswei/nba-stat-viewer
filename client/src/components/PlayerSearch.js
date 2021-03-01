@@ -10,7 +10,7 @@ function PlayerSearch() {
   const [response, setResponse] = useState("")
   const [search, setSearch] = useState("")
   const dispatch = useDispatch();
-  const debouncedSearch = debounce((event) => setSearch(event.target.value), 250);
+  const debouncedSearch = debounce((event) => setSearch(event.target.value), 500);
 
   async function callApi() {
     try {
