@@ -6,10 +6,10 @@ function SeasonAverages(props) {
 
   async function callApi() {
     try {
-      const queryString = players.reduce((acc, player) => {
-        return acc + 'player_ids[]=' + player.id + '&'
+      const queryString = players.reduce((acc, player, i) => {
+        return acc + (i==0 ? '?' : '&') + 'players[]=' + player.id
       }, '')
-      const url = `http://localhost:9000/players/stats/2018?${queryString}`
+      const url = `http://localhost:9000/players/stats/2018${queryString}`
       console.log(url)
       const res = await fetch(url);
       console.log(res)
@@ -22,17 +22,15 @@ function SeasonAverages(props) {
   }
 
   useEffect(() => {
-    callApi().then((json) => {
-            console.log(json)
-
-      setAverages(json)
-    })
+    if (players.length > 0) {
+      callApi().then((json) => {
+        setAverages(json.data)
+      })
+    }
   }, [players])
 
   return <div>
-    {players && players.map((player) => <div>{player.id}</div>)}
-  
-
+    {averages && averages.map((average) => <div>{average.player_id}</div>)}
   </div>
 }
 

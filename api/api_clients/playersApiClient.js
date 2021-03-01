@@ -33,6 +33,7 @@ exports.getPlayerDetail = async (req, res) => {
 }
 
 exports.getSeasonAveragesMultiPlayer = async (req, res) => {
+  console.log(req.query)
   try {
     const players = req.query.players.reduce((acc, id) => {
       return acc + '&player_ids[]=' + id
