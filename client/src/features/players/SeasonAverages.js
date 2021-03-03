@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-
+import TableDisplay from 'components/TableDisplay'
 function SeasonAverages(props) {
   const players = props.players
   const [averages, setAverages] = useState([])
@@ -31,6 +31,7 @@ function SeasonAverages(props) {
 
   return <div>
     {averages && averages.map((average) => <div>{average.player_id}</div>)}
+    <TableDisplay data={averages}/>
   </div>
 }
 
