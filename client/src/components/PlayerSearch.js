@@ -2,12 +2,11 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {
   addPlayers,
-  removePlayers,
 } from 'features/players/playersSlice';
 import debounce from 'utils/debounce'
 
 function PlayerSearch() {
-  const [response, setResponse] = useState("")
+  const [response, setResponse] = useState([])
   const [search, setSearch] = useState("")
   const dispatch = useDispatch();
   const debouncedSearch = debounce((event) => setSearch(event.target.value), 250);
@@ -21,6 +20,10 @@ function PlayerSearch() {
       console.error('err', err);
       return null;
     }
+  }
+
+  function handleClick(players) {
+    dispatch(addPlayers(players))
   }
 
   useEffect(() => {
@@ -43,7 +46,7 @@ function PlayerSearch() {
       <div>
         {response && response.data &&
           response.data.map((i) => {
-            return <button key={i.id} onClick={() => dispatch(addPlayers([i]))}>
+            return <button key={i.id} onClick={() => handleClick([i])}>
               {i.id}, {i.first_name}, {i.last_name}
             </button>
           })

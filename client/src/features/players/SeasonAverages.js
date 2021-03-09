@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import TableDisplay from 'components/TableDisplay'
-import BarChart from 'components/BarChart';
 
 function SeasonAverages(props) {
   const players = props.players
