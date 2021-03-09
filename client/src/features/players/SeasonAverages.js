@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import TableDisplay from 'components/TableDisplay'
+import BarChart from 'components/BarChart';
+
 function SeasonAverages(props) {
   const players = props.players
   const [averages, setAverages] = useState([])
@@ -10,9 +12,7 @@ function SeasonAverages(props) {
         return acc + (i==0 ? '?' : '&') + 'players[]=' + player.id
       }, '')
       const url = `http://localhost:9000/players/stats/2018${queryString}`
-      console.log(url)
       const res = await fetch(url);
-      console.log(res)
       const json = await res.json();
       return json;
     } catch (err) {
@@ -30,8 +30,12 @@ function SeasonAverages(props) {
   }, [players])
 
   return <div>
-    {averages && averages.map((average) => <div>{average.player_id}</div>)}
-    <TableDisplay data={averages}/>
+    {averages && 
+      <React.Fragment>
+        {averages.map((average) => <div>{average.player_id}</div>)}
+        <TableDisplay data={averages}/>
+      </React.Fragment>
+    }
   </div>
 }
 

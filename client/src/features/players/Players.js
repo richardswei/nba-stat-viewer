@@ -18,7 +18,7 @@ function Players() {
         {players.map((player) => 
           <div>
             <button key={player.id} onClick={() => dispatch(removePlayers([player]))}>
-              {player.first_name} {player.last_name}
+              X {player.first_name} {player.last_name}
             </button>
           </div>
         )}
