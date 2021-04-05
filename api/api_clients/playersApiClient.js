@@ -38,7 +38,7 @@ exports.getSeasonAveragesMultiPlayer = async (req, res) => {
     const players = req.query.players.reduce((acc, id) => {
       return acc + '&player_ids[]=' + id
     }, '')
-    const url = `${requestPrefix}season_averages?season=${req.params.season}${players}`
+    const url = `${requestPrefix}season_averages?season=${req.query.seasons[0]}${players}`
     console.log(url)
     let results = await fetch(url)
     return results.json()
