@@ -12,8 +12,8 @@ function PlayersStaging() {
   return (<div>
     {players && <div>   
       {players.map((player) => 
-        <div>
-          <button key={player.id} onClick={() => dispatch(removePlayers([player]))}>
+        <div key={player.id} >
+          <button onClick={() => dispatch(removePlayers([player]))}>
             X {player.first_name} {player.last_name}
           </button>
         </div>

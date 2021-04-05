@@ -11,8 +11,8 @@ function SeasonsStaging() {
   return (<div>
     {seasons && <div>   
       {seasons.map((season) => 
-        <div>
-          <button key={season} onClick={() => dispatch(removeSeasons([season]))}>
+        <div key={season}>
+          <button onClick={() => dispatch(removeSeasons([season]))}>
             X {season}
           </button>
         </div>

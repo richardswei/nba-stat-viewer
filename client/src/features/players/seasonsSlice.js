@@ -2,25 +2,25 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const seasonsSlice = createSlice({
   name: 'seasons',
-  initialState: {
-    value: [],
-  },
+  initialState: [],
   reducers: {
     addSeasons: (state, action) => {
+      let arr = [...state]
       action.payload.forEach((year) => {
-        if (!state.value.includes(year)) {
-          state.value.push(year)
+        if (!arr.includes(year)) {
+          arr.push(year)
         }
       })
+      return arr
     },
     removeSeasons: (state, action) => {
-      state.value = state.value.filter((item, i) => !state.value.includes(item))
+      return state.filter((item) => !action.payload.includes(item))
     },
   },
 });
 
 export const { addSeasons, removeSeasons } = seasonsSlice.actions;
 
-export const selectSeasons = state => state.seasons.value;
+export const selectSeasons = state => state.seasons;
 
 export default seasonsSlice.reducer;

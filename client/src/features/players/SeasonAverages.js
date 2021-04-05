@@ -3,6 +3,7 @@ import TableDisplay from 'components/TableDisplay'
 
 function SeasonAverages(props) {
   const players = props.players
+  const seasons = props.seasons
   const [averages, setAverages] = useState([])
 
   async function callApi() {
@@ -21,12 +22,13 @@ function SeasonAverages(props) {
   }
 
   useEffect(() => {
-    if (players.length > 0) {
+    if (players && players.length > 0 && seasons && seasons.length > 0) {
       callApi().then((json) => {
         setAverages(json.data)
       })
     }
-  }, [players])
+  }, [players, seasons])
+
 
   return <div>
     {averages && 
