@@ -27,7 +27,7 @@ function SeasonAverages(props) {
   useEffect(() => {
     if (players && players.length > 0 && seasons && seasons.length > 0) {
       callApi().then((json) => {
-        setAverages(json.data)
+        if (json) {setAverages(json.data)}
       })
     }
   }, [players, seasons])

@@ -25,6 +25,7 @@ exports.get_player_detail = async function(req, res) {
 // Display detail page for a specific Player.
 exports.get_season_averages = async function(req, res) {
   const players = await playersApiClient.getSeasonAveragesMultiPlayer(req, res)
+  console.log(players)
   res.send(players)
 };
 

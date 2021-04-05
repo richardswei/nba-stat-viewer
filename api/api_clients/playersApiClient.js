@@ -4,7 +4,6 @@ const requestPrefix = 'https://balldontlie.io/api/v1/'
 exports.getPlayerSearch = async (req, res) => {
   try {
     const url = `${requestPrefix}players?search=${req.params.name}&per_page=${req.params.limit}`
-    console.log(url)
     let results = await fetch(url)
     return results.json()
   } catch (error) {
@@ -15,7 +14,6 @@ exports.getPlayerSearch = async (req, res) => {
 exports.getPlayerSearchAll = async (req, res) => {
   try {
     const url = `${requestPrefix}players?search=${req.params.name}&per_page=${req.params.limit}`
-    console.log(url)
     let results = await fetch(url)
     return results.json()
   } catch (error) {
@@ -33,15 +31,22 @@ exports.getPlayerDetail = async (req, res) => {
 }
 
 exports.getSeasonAveragesMultiPlayer = async (req, res) => {
-  console.log(req.query)
   try {
+    let res = []
     const players = req.query.players.reduce((acc, id) => {
       return acc + '&player_ids[]=' + id
     }, '')
-    const url = `${requestPrefix}season_averages?season=${req.query.seasons[0]}${players}`
-    console.log(url)
-    let results = await fetch(url)
-    return results.json()
+    const fetches = req.query.seasons.map((season) => {
+      const url = `${requestPrefix}season_averages?season=${season}${players}`
+      return fetch(url)
+    });
+    return Promise.all(fetches)
+      .then((responses) => Promise.all(responses.map(function (response) {
+        return response.json()
+      })))
+  
+    // let results = await fetch(url)
+    // return results.json()
   } catch (error) {
     console.error(error)
   }
@@ -50,12 +55,10 @@ exports.getSeasonAveragesMultiPlayer = async (req, res) => {
 
 // exports.getSeasonAveragesMultiPlayer = async (req, res) => {
 //   try {
-//     console.log("tried")
 //     const players = req.query.players.reduce((acc, id) => {
 //       return acc + '&player_ids[]=' + id
 //     }, '')
 //     const url = `${requestPrefix}season_averages?season=${req.query.season}${players}`
-//     console.log(url)
 //     let results = await fetch(url)
 //     return results.json()
 //   } catch (error) {
