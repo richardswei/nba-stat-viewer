@@ -26,8 +26,15 @@ function SeasonAverages(props) {
 
   useEffect(() => {
     if (players && players.length > 0 && seasons && seasons.length > 0) {
+      let playerDict = {}
+      players.forEach((player)=> { playerDict[player.id] = `${player.first_name} ${player.last_name}`})
       callApi().then((json) => {
-        if (json) {setAverages(json.data)}
+        if (json) {
+          setAverages(json.data.map((statLine) => {
+            statLine.name = playerDict[statLine.player_id]
+            return statLine
+          }))
+        }
       })
     }
   }, [players, seasons])
@@ -36,7 +43,6 @@ function SeasonAverages(props) {
   return <div>
     {averages && 
       <React.Fragment>
-        {averages.map((average) => <div>{average.player_id}</div>)}
         <TableDisplay data={averages}/>
       </React.Fragment>
     }
